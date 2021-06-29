@@ -1,4 +1,4 @@
-name: ateam
+name: a-team
 
 on:
   pull_request:
@@ -19,14 +19,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create SSH key
-        run: |
-          mkdir -p -m 700 ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-        shell: bash
+      -name: Create yum repo
+       run: |
+        yum install createrepo
 
-      - name: Image build
-        run: |
-            tmt run -vvv --all provision --how connect --guest ${{ secrets.HOST }} --key ~/.ssh/id_rsa
-        shell: bash
+      # - name: Create SSH key
+      #   run: |
+      #     mkdir -p -m 700 ~/.ssh/
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #   shell: bash
+
+      # - name: Image build
+      #   run: |
+      #       tmt run -vvv --all provision --how connect --guest ${{ secrets.HOST }} --key ~/.ssh/id_rsa
+      #   shell: bash
